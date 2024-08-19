@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
+import NavbarLink from "./NavbarLink.vue";
 import logo from "@/assets/img/logo.png";
+
+const links = [
+  { link: "/", text: "Home" },
+  { link: "/jobs", text: "Jobs" },
+  { link: "/jobs/add", text: "Add Jobs" },
+];
 </script>
 
 <template>
@@ -10,7 +17,6 @@ import logo from "@/assets/img/logo.png";
         <div
           class="flex flex-1 items-center justify-center md:items-stretch md:justify-start"
         >
-          <!-- Logo -->
           <RouterLink class="flex flex-shrink-0 items-center mr-4" to="/">
             <img class="h-10 w-auto" :src="logo" alt="Vue Jobs" />
             <span class="hidden md:block text-white text-2xl font-bold ml-2"
@@ -19,21 +25,12 @@ import logo from "@/assets/img/logo.png";
           </RouterLink>
           <div class="md:ml-auto">
             <div class="flex space-x-2">
-              <RouterLink
-                to="/"
-                class="text-white bg-green-900 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2"
-                >Home</RouterLink
-              >
-              <RouterLink
-                to="/jobs"
-                class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
-                >Jobs</RouterLink
-              >
-              <RouterLink
-                to="/jobs/add"
-                class="text-white hover:bg-green-900 hover:text-white rounded-md px-3 py-2"
-                >Add Job</RouterLink
-              >
+              <NavbarLink
+                v-for="item in links"
+                :key="item.link"
+                :link="item.link"
+                :text="item.text"
+              />
             </div>
           </div>
         </div>
