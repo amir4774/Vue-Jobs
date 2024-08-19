@@ -1,15 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
-
-interface JobType {
-  id: number;
-  type: string;
-  title: string;
-  description: string;
-  salary: string;
-  location: string;
-}
+import type { JobType } from "./JobListings.vue";
 
 const props = defineProps<{
   job: JobType;
@@ -60,7 +52,7 @@ const truncateDescription = computed(() => {
           {{ job.location }}
         </div>
         <RouterLink
-          :to="`/job/${job.id}`"
+          :to="`/jobs/${job.id}`"
           class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm"
         >
           Read More
