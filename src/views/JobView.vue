@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { reactive, onMounted } from "vue";
-import { useRoute, RouterLink } from "vue-router";
+import { useRoute, RouterLink, useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 import axios from "axios";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import type { JobViewType } from "@/components/Interfaces";
 import BackButton from "@/components/BackButton.vue";
+import type { JobViewType } from "@/components/Interfaces";
 
 interface reactiveType {
   job: JobViewType;
@@ -12,12 +13,25 @@ interface reactiveType {
 }
 
 const route = useRoute();
+const router = useRouter();
+const toast = useToast();
 const jobId = route.params.id;
 
 const state = reactive<reactiveType>({
   job: {} as JobViewType,
   isLoading: true,
 });
+
+const deleteJob = async () => {
+  try {
+    await axios.delete(`/api/jobs/${jobId}`);
+    toast.success("Job Deleted Successfully");
+    router.push("/jobs");
+  } catch (error) {
+    console.error("Error deleting job:", error);
+    toast.error("Job Was Not Deleted");
+  }
+};
 
 onMounted(async () => {
   try {
@@ -45,9 +59,7 @@ onMounted(async () => {
             <div
               class="text-gray-500 mb-4 flex align-middle justify-center md:justify-start"
             >
-              <i
-                class="pi pi-map-marker text-orange-700 mr-2"
-              ></i>
+              <i class="pi pi-map-marker text-orange-700 mr-2"></i>
               <p class="text-orange-700">{{ state.job.location }}</p>
             </div>
           </div>
@@ -75,7 +87,7 @@ onMounted(async () => {
 
             <h2 class="text-2xl">{{ state.job.company.name }}</h2>
 
-            <p class="my-2 break-words">
+            <p class="my-2">
               {{ state.job.company.description }}
             </p>
 
@@ -103,6 +115,7 @@ onMounted(async () => {
               >Edit Job</RouterLink
             >
             <button
+              @click="deleteJob"
               class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
             >
               Delete Job
