@@ -75,7 +75,7 @@ onMounted(async () => {
 
             <h2 class="text-2xl">{{ state.job.company.name }}</h2>
 
-            <p class="my-2">
+            <p class="my-2 break-words">
               {{ state.job.company.description }}
             </p>
 
