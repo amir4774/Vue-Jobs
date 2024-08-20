@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { RouterLink } from "vue-router";
-import type { JobType } from "./JobListings.vue";
+import type { JobType } from "./Interfaces";
+
 
 const props = defineProps<{
   job: JobType;

@@ -1,10 +1,7 @@
 <script setup lang="ts">
-interface Props {
-  title?: string;
-  subtitle?: string;
-}
+import type { HeroProps } from "./Interfaces";
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<HeroProps>(), {
   title: "Become a Vue Dev",
   subtitle: "Find the Vue job that fits your skills and needs",
 });
